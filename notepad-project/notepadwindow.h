@@ -2,6 +2,10 @@
 #define NOTEPADWINDOW_H
 
 #include <QMainWindow>
+#include <QFile>
+#include <QFileDialog>
+#include <QTextStream>
+#include <QMessageBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,5 +23,6 @@ public:
 
 private:
     Ui::NotepadWindow *ui;
+    QString currentFile = "";
 };
 #endif // NOTEPADWINDOW_H

@@ -6,6 +6,7 @@ NotepadWindow::NotepadWindow(QWidget *parent)
     , ui(new Ui::NotepadWindow)
 {
     ui->setupUi(this);
+    this->setCentralWidget(ui->textEdit);
 }
 
 NotepadWindow::~NotepadWindow()
