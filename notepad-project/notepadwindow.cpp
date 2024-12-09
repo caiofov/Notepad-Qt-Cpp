@@ -67,3 +67,40 @@ void NotepadWindow::on_actionSave_as_triggered()
 
 }
 
+
+void NotepadWindow::on_actionExit_triggered()
+{
+    QApplication::quit();
+}
+
+
+void NotepadWindow::on_actionCopy_triggered()
+{
+    ui->textEdit->copy();
+}
+
+
+void NotepadWindow::on_actionPaste_triggered()
+{
+    ui->textEdit->paste();
+}
+
+
+void NotepadWindow::on_actionCut_triggered()
+{
+    ui->textEdit->cut();
+
+}
+
+
+void NotepadWindow::on_actionUndo_triggered()
+{
+    ui->textEdit->undo();
+}
+
+
+void NotepadWindow::on_actionRedo_triggered()
+{
+    ui->textEdit->redo();
+}
+
