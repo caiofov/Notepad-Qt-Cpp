@@ -23,8 +23,6 @@ public:
     ~NotepadWindow();
 
 private slots:
-    void setCurrentFilename(QString filename);
-
     void on_actionNew_triggered();
 
     void on_actionOpen_triggered();
@@ -43,8 +41,17 @@ private slots:
 
     void on_actionRedo_triggered();
 
+    void on_textEdit_textChanged();
+
 private:
     Ui::NotepadWindow *ui;
-    QString currentFile = "";
+    QString currentFile = "New file";
+    bool saved = false;
+
+    void setCurrentFilename(QString filename);
+
+    void setSaved(bool saved);
+
+    bool saveFile();
 };
 #endif // NOTEPADWINDOW_H
