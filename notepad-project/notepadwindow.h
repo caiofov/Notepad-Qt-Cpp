@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QFile>
 #include <QFileDialog>
+#include <QFileInfo>
 #include <QTextStream>
 #include <QMessageBox>
 
@@ -22,6 +23,8 @@ public:
     ~NotepadWindow();
 
 private slots:
+    void setCurrentFilename(QString filename);
+
     void on_actionNew_triggered();
 
     void on_actionOpen_triggered();
