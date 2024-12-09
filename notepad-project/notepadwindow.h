@@ -21,6 +21,13 @@ public:
     NotepadWindow(QWidget *parent = nullptr);
     ~NotepadWindow();
 
+private slots:
+    void on_actionNew_triggered();
+
+    void on_actionOpen_triggered();
+
+    void on_actionSave_as_triggered();
+
 private:
     Ui::NotepadWindow *ui;
     QString currentFile = "";
