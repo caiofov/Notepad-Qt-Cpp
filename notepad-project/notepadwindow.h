@@ -45,8 +45,8 @@ private slots:
 
 private:
     Ui::NotepadWindow *ui;
-    QString currentFile = "New file";
-    bool saved = false;
+    QString currentFile;
+    bool saved = true;
 
     void setCurrentFilename(QString filename);
 

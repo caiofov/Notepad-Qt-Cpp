@@ -7,7 +7,7 @@ NotepadWindow::NotepadWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setCentralWidget(ui->textEdit);
-    setWindowTitle(currentFile + " (not saved)");
+    setCurrentFilename("");
 }
 
 NotepadWindow::~NotepadWindow()
@@ -21,20 +21,23 @@ void NotepadWindow::setSaved(bool saved){
     }
     this->saved = saved;
     if(!saved){
-        setWindowTitle(currentFile + " (not saved)");
-        ui->actionSave_as->enabledChanged(true);
+        setWindowTitle(windowTitle() + "*");
+        ui->actionSave_as->setEnabled(true);
     }else{
         setWindowTitle(currentFile);
-        ui->actionSave_as->enabledChanged(false);
+        ui->actionSave_as->setEnabled(false);
     }
 }
 
 void NotepadWindow::setCurrentFilename(QString filename){
-    const QFileInfo info(filename);
-    const QString fileBasename = info.fileName();
-
-    currentFile = fileBasename;
-    setWindowTitle(currentFile);
+    if(!filename.isEmpty()){
+        const QFileInfo info(filename);
+        filename = info.fileName();
+        setWindowTitle(filename);
+    }else{
+        setWindowTitle("New file");
+    }
+    currentFile = filename;
 }
 
 void NotepadWindow::on_actionNew_triggered()
@@ -55,12 +58,13 @@ void NotepadWindow::on_actionOpen_triggered()
         return;
     }
 
-    setCurrentFilename(filename);
-    setSaved(true);
     QTextStream in(&file);
     QString text = in.readAll();
     ui->textEdit->setText(text);
     file.close();
+
+    setCurrentFilename(filename);
+    setSaved(true);
 }
 
 bool NotepadWindow::saveFile(){
@@ -73,14 +77,14 @@ bool NotepadWindow::saveFile(){
         return false;
     }
 
-    setCurrentFilename(filename);
-    setSaved(true);
-
     QTextStream out(&file);
     QString text = ui->textEdit->toPlainText();
     out << text;
     file.close();
     return true;
+
+    setCurrentFilename(filename);
+    setSaved(true);
 }
 
 void NotepadWindow::on_actionSave_as_triggered()
