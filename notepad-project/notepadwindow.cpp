@@ -7,7 +7,9 @@ NotepadWindow::NotepadWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setCentralWidget(ui->textEdit);
-    setCurrentFilename("");
+
+    setWindowTitle(currentFile);
+    ui->actionSave->setEnabled(false);
 }
 
 NotepadWindow::~NotepadWindow()
@@ -21,23 +23,25 @@ void NotepadWindow::setSaved(bool saved){
     }
     this->saved = saved;
     if(!saved){
-        setWindowTitle(windowTitle() + "*");
+        setWindowTitle(currentFile + "*");
         ui->actionSave_as->setEnabled(true);
+        if(!currentFilePath.isEmpty()){
+            ui->actionSave->setEnabled(true);
+        }
     }else{
         setWindowTitle(currentFile);
         ui->actionSave_as->setEnabled(false);
+        ui->actionSave->setEnabled(false);
     }
 }
 
 void NotepadWindow::setCurrentFilename(QString filename){
-    if(!filename.isEmpty()){
-        const QFileInfo info(filename);
-        filename = info.fileName();
-        setWindowTitle(filename);
-    }else{
-        setWindowTitle("New file");
-    }
-    currentFile = filename;
+    const QFileInfo info(filename);
+    QString fileBasename = info.fileName();
+
+    currentFile = fileBasename;
+    currentFilePath = filename;
+    setWindowTitle(currentFile);
 }
 
 void NotepadWindow::on_actionNew_triggered()
@@ -67,8 +71,7 @@ void NotepadWindow::on_actionOpen_triggered()
     setSaved(true);
 }
 
-bool NotepadWindow::saveFile(){
-    QString filename = QFileDialog::getSaveFileName(this, "Save the file");
+bool NotepadWindow::saveFile(QString filename){
     QFile file(filename);
 
     // checks for errors
@@ -81,15 +84,26 @@ bool NotepadWindow::saveFile(){
     QString text = ui->textEdit->toPlainText();
     out << text;
     file.close();
-    return true;
 
     setCurrentFilename(filename);
     setSaved(true);
+
+    return true;
+}
+
+bool NotepadWindow::saveFileAs(){
+    QString filename = QFileDialog::getSaveFileName(this, "Save the file");
+    return saveFile(filename);
+}
+
+void NotepadWindow::on_actionSave_triggered()
+{
+    saveFile(currentFile);
 }
 
 void NotepadWindow::on_actionSave_as_triggered()
 {
-    saveFile();
+    saveFileAs();
 }
 
 
@@ -101,7 +115,7 @@ void NotepadWindow::on_actionExit_triggered()
         QMessageBox::StandardButton reply = QMessageBox::question(this, "Exit", "Save file before exiting?",
                                       QMessageBox::Yes|QMessageBox::No);
 
-        success = reply == QMessageBox::Yes ? saveFile() : true;
+        success = reply == QMessageBox::Yes ? (currentFile.isEmpty() ? saveFileAs() : saveFile(currentFile)) : true;
     }
     if(success){
         QApplication::quit();
@@ -142,6 +156,11 @@ void NotepadWindow::on_actionRedo_triggered()
 
 void NotepadWindow::on_textEdit_textChanged()
 {
-    setSaved(false);
+    if(saved){
+        setSaved(false);
+    }
 }
+
+
+
 

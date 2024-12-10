@@ -43,15 +43,20 @@ private slots:
 
     void on_textEdit_textChanged();
 
+    void on_actionSave_triggered();
+
 private:
     Ui::NotepadWindow *ui;
-    QString currentFile;
+    QString currentFile = "New file";
+    QString currentFilePath = "";
     bool saved = true;
 
     void setCurrentFilename(QString filename);
 
     void setSaved(bool saved);
 
-    bool saveFile();
+    bool saveFile(QString filename);
+
+    bool saveFileAs();
 };
 #endif // NOTEPADWINDOW_H
