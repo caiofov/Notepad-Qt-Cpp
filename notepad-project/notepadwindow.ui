@@ -121,6 +121,9 @@
    <property name="text">
     <string>Copy</string>
    </property>
+   <property name="toolTip">
+    <string>Copy (Ctrl + C)</string>
+   </property>
   </action>
   <action name="actionPaste">
    <property name="icon">
@@ -128,6 +131,9 @@
    </property>
    <property name="text">
     <string>Paste</string>
+   </property>
+   <property name="toolTip">
+    <string>Paste  (Ctrl + V)</string>
    </property>
   </action>
   <action name="actionCut">
@@ -137,6 +143,9 @@
    <property name="text">
     <string>Cut</string>
    </property>
+   <property name="toolTip">
+    <string>Cut (Ctrl + X)</string>
+   </property>
   </action>
   <action name="actionUndo">
    <property name="icon">
@@ -145,6 +154,9 @@
    <property name="text">
     <string>Undo</string>
    </property>
+   <property name="toolTip">
+    <string>Undo  (Ctrl + Z)</string>
+   </property>
   </action>
   <action name="actionRedo">
    <property name="icon">
@@ -152,6 +164,9 @@
    </property>
    <property name="text">
     <string>Redo</string>
+   </property>
+   <property name="toolTip">
+    <string>Redo  (Ctrl + Y)</string>
    </property>
   </action>
  </widget>
